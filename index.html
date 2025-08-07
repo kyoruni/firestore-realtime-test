@@ -6,11 +6,22 @@
   <title>kyoruni | firestore-realtime-test</title>
 </head>
 <body>
+  <form id="itemForm">
+    <label>
+      ID:
+      <input name="id" placeholder="ID" type="number" required />
+    </label>
+    <label>
+      メッセージ:
+      <input name="message" placeholder="メッセージ" required />
+    </label>
+    <button type="submit">追加</button>
+  </form>
   <ul id="itemList"></ul>
 </body>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  import { addDoc, getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
   const firebaseConfig = {
     // apiKeyとか
@@ -33,6 +44,22 @@
     })
     .catch(error => {
       console.error("Error getting documents: ", error);
+    });
+
+    const form = document.getElementById("itemForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const id = form.id.value;
+      const message = form.message.value;
+
+      try {
+        await addDoc(colRef, { id: Number(id), message });
+        form.reset();
+      } catch (error) {
+        console.error(error);
+      }
     });
 </script>
 </html>
