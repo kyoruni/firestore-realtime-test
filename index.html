@@ -6,7 +6,7 @@
   <title>kyoruni | firestore-realtime-test</title>
 </head>
 <body>
-  hogehoge
+  <ul id="itemList"></ul>
 </body>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
@@ -23,8 +23,12 @@
 
   getDocs(colRef)
     .then(snapshot => {
-      snapshot.docs.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
+      const list = document.getElementById("itemList");
+      snapshot.forEach(doc => {
+        const item = doc.data();
+        const li = document.createElement("li");
+        li.textContent = `${doc.id}: ${JSON.stringify(item)}`;
+        list.appendChild(li);
       });
     })
     .catch(error => {
