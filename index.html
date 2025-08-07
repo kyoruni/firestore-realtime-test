@@ -60,20 +60,20 @@
     });
   });
 
-    const form = document.getElementById("itemForm");
+  const form = document.getElementById("itemForm");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const id = form.id.value;
-      const message = form.message.value;
+    const id = form.id.value;
+    const message = form.message.value;
 
-      try {
-        await addDoc(colRef, { id: Number(id), message });
-        form.reset();
-      } catch (error) {
-        console.error(error);
-      }
-    });
+    try {
+      await addDoc(colRef, { id: Number(id), message });
+      form.reset();
+    } catch (error) {
+      console.error(error);
+    }
+  });
 </script>
 </html>
