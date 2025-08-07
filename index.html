@@ -21,7 +21,7 @@
 </body>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { addDoc, getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  import { addDoc, getFirestore, collection, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
   const firebaseConfig = {
     // apiKeyとか
@@ -45,6 +45,18 @@
     .catch(error => {
       console.error("Error getting documents: ", error);
     });
+
+  onSnapshot(colRef, (snapshot) => {
+    const list = document.getElementById("itemList");
+    list.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const item = doc.data();
+      const li = document.createElement("li");
+      li.textContent = `${doc.id}: ${JSON.stringify(item)}`;
+      list.appendChild(li);
+    });
+  });
 
     const form = document.getElementById("itemForm");
 
